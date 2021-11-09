@@ -26,6 +26,21 @@ header {
     border-radius: 5px;
     border-left: 5px solid white;
     height: 20px;
+    box-shadow: hsl(180, 29%, 50%, 0.25) 0px 10px 15px -3px;
+    justify-content: space-between;
+}
+
+#filter-items {
+    display: flex;
+}
+
+#filter-clear {
+    font-size: 12px;
+    padding-right: 40px;
+    text-decoration: underline;
+}
+#filter-clear:hover {
+    color:hsl(180, 29%, 50%)
 }
 
 .badge {
