@@ -1,27 +1,37 @@
 import jobList from "../data.js";
 
-document.getElementById("job-list").innerHTML = function () {
-    let jobItemHtml = "";
+// 선택되어있는 필터(클로저 활용)
+let filter = filterClosure();
+
+// 필터링한 job list
+let search = searchClosure();
+
+renderJob(jobList);
+
+document.getElementById("filter-clear").addEventListener('click', () => filter.clearFilter());
+
+function renderJob(jobList) {
+    let jobItemHtml = '';
     for(let jobItem of jobList) {
-        let badgeHtml = "";
-        let filterItemsHtml = "";
+        let badgeHtml = '';
+        let filterItemsHtml = '';
         if(jobItem.new) {
             badgeHtml += `
-                <section class="badge-new">
+                <section id="badge-new">
                     NEW!
                 </section>
             `
         }
         if(jobItem.featured) {
             badgeHtml += `
-                <section class="badge-featured">
+                <section id="badge-featured">
                     FEATURED
                 </section>
             `
         }
         for(let filterItem of jobItem.languages.concat(jobItem.tools)) {
             filterItemsHtml += `
-                <section class="badge-filter">${filterItem}</section>
+                <section class="badge-filter-text">${filterItem}</section>
             `
         }
         jobItemHtml += `
@@ -53,6 +63,85 @@ document.getElementById("job-list").innerHTML = function () {
             </section>
         `
     }
-    return jobItemHtml;
-}()
+    document.getElementById("job-list").innerHTML = jobItemHtml;
+
+    Array.from(document.getElementsByClassName("filter-item")).forEach((filterItem) => {
+        let badgeFilter = filterItem.getElementsByClassName('badge-filter-text')[0];
+        console.log(filterItem);
+        badgeFilter.addEventListener('click', () => handleFilterClick(filterItem));
+    })
+    
+    Array.from(document.getElementsByClassName("badge-filter-text")).forEach((filterBadge) => {
+        filterBadge.addEventListener('click', () => handleBadgeClick(filterBadge));
+    })
+    
+}
+
+function filterClosure() {
+    let selectedFilter = [];
+    let filterItemsElem = document.getElementById('filter-items');
+    return {
+        addFilter: function (filterItemText) {
+            if(!selectedFilter.includes(filterItemText)) {
+                selectedFilter.push(filterItemText);  
+                let filterItemElem = document.createElement('section');
+                filterItemElem.className = 'filter-item';
+                filterItemElem.setAttribute('category', filterItemText)
+                filterItemElem.innerHTML = `
+                    <section class="badge-filter-text">${filterItemText}</section>
+                    <section class="badge-filter-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"><path fill="#FFF" fill-rule="evenodd" d="M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z"/></svg>
+                    </section>
+                `;
+                filterItemsElem.append(filterItemElem);
+                // filter item icon에 이벤트 연결
+                filterItemElem.getElementsByClassName('badge-filter-icon')[0]
+                    .addEventListener('click', () => filterDeleteClick(filterItemText));
+
+                
+                search();
+            }
+        },
+        deleteFilter: function (filterItemText) {
+            selectedFilter = selectedFilter.filter((el) => el !== filterItemText); 
+            filterItemsElem.querySelector(`[category=${filterItemText}]`).remove();
+        },
+        clearFilter: function () {
+            selectedFilter = [];
+            Array.from(filterItemsElem.getElementsByClassName('filter-item')).forEach((filterItemElem) => {
+                filterItemElem.remove();
+            });
+        },
+        getFilter: function () {
+            return selectedFilter;
+        }
+    }
+}
+
+function searchClosure() {
+    let filteredJobList = [];
+    return function () {
+        let selectedFilter = filter.getFilter();
+        for(let selectedFilterItem of selectedFilter) {
+            filteredJobList = filteredJobList.concat(jobList.filter((jobItem) => 
+                jobItem.languages.concat(jobItem.tools).includes(selectedFilterItem)
+            ));
+        }
+        // 중복제거
+        filteredJobList = filteredJobList.filter(
+            (arr, index, callback) => index === callback.findIndex(t => t.id === arr.id)
+        );
+
+        renderJob(filteredJobList)
+    }
+}
+
+function filterDeleteClick(filterItemText) {
+    filter.deleteFilter(filterItemText);
+}
+
+function handleBadgeClick(filterBadge) {
+    let filterBadgeName = filterBadge.innerHTML;
+    filter.addFilter(filterBadgeName);
+}
 

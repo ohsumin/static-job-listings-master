@@ -42,7 +42,7 @@ function closure() {
 // filter items render
 document.getElementById("filter-items").innerHTML = function () {
     let html = "";
-    for (filterItem of filterItems){ 
+    for (let filterItem of filterItems){ 
         html = html + `
             <section class="filter-item">
                 <section class="badge-filter">${filterItem}</section>
