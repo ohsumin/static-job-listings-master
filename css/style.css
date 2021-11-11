@@ -28,6 +28,8 @@ header {
     box-shadow: hsl(180, 29%, 50%, 0.25) 0px 10px 15px -3px;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    top: 80px;
 }
 
 #filter-items {
