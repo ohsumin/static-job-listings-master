@@ -28,7 +28,7 @@ function renderJob(jobList) {
         }
         for(let filterItem of jobItem.languages.concat(jobItem.tools)) {
             filterItemsHtml += `
-                <section class="badge-filter-text">${filterItem}</section>
+                <section class="badge-filter">${filterItem}</section>
             `
         }
         jobItemHtml += `
@@ -67,7 +67,7 @@ function renderJob(jobList) {
         badgeFilter.addEventListener('click', () => handleFilterClick(filterItem));
     })
     
-    Array.from(document.getElementsByClassName("badge-filter-text")).forEach((filterBadge) => {
+    Array.from(document.getElementsByClassName("badge-filter")).forEach((filterBadge) => {
         filterBadge.addEventListener('click', () => handleBadgeClick(filterBadge));
     })
     
