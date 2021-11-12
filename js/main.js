@@ -14,14 +14,14 @@ function renderJob(jobList) {
         let filterItemsHtml = '';
         if(jobItem.new) {
             badgeHtml += `
-                <section id="badge-new">
+                <section class="badge-new">
                     NEW!
                 </section>
             `
         }
         if(jobItem.featured) {
             badgeHtml += `
-                <section id="badge-featured">
+                <section class="badge-featured">
                     FEATURED
                 </section>
             `

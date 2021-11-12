@@ -1,3 +1,17 @@
+html {
+
+    /* Prevent font scaling in landscape */
+
+   -webkit-text-size-adjust: none; /*Chrome, Safari, newer versions of Opera*/
+
+   -moz-text-size-adjust: none; /*Firefox*/
+
+   -ms-text-size-adjust: none;  /*Ie*/
+
+   -o-text-size-adjust: none; /*old versions of Opera*/
+
+}
+
 body {       
     background-color: hsl(180, 52%, 96%) !important; 
     font-family: 'Spartan', sans-serif;
@@ -46,7 +60,7 @@ header {
     color:hsl(180, 29%, 50%)
 }
 
-#badge-new {
+.badge-new {
     border-radius: 15px;
     background: hsl(180, 29%, 50%);
     padding: 0px 10px;
@@ -57,7 +71,7 @@ header {
     margin-left: 7px;
 }
 
-#badge-featured {
+.badge-featured {
     border-radius: 15px;
     background: black;
     padding: 0px 10px;
@@ -79,7 +93,7 @@ header {
     vertical-align: middle;
     font-size: 12px;
     padding: 2px 8px 0px;
-    margin-left: 13px;
+    margin-right: 13px;
 }
 .badge-filter:hover {
     background-color: hsl(180, 29%, 50%);
@@ -165,6 +179,7 @@ header {
     font-size: 13px;
     vertical-align: middle;
     margin-right: 10px;
+    font-weight: 600;
 }
 
 .job-detail-content {
@@ -190,3 +205,49 @@ header {
 
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
+
+@media screen and (max-width: 375px) { 
+    .job-item {
+        display: block;
+        padding: 15px;
+        font-size: 10px;
+    }
+
+    .job-logo {
+        position: relative;
+        top: -33px;
+    }
+
+    .job-logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .job-detail { 
+        position: relative;
+        top: -20px;
+        margin: 0px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgb(192, 189, 189);
+    }
+
+    .badge-new {
+        margin: 0px;
+    }
+
+    .job-detail-content {
+        font-size: 0.9rem;
+    }
+    
+    .job-detail-footer {
+        font-size: 0.7rem;
+    }
+
+    .circle {
+        margin: 4px 6px;
+    }
+
+    .job-filter-items {
+        float: left;
+    }
+}
