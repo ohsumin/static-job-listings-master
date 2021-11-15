@@ -61,11 +61,6 @@ function renderJob(jobList) {
         `
     }
     document.getElementById("job-list").innerHTML = jobItemHtml;
-
-    Array.from(document.getElementsByClassName("filter-item")).forEach((filterItem) => {
-        let badgeFilter = filterItem.getElementsByClassName('badge-filter-text')[0];
-        badgeFilter.addEventListener('click', () => handleFilterClick(filterItem));
-    })
     
     Array.from(document.getElementsByClassName("badge-filter")).forEach((filterBadge) => {
         filterBadge.addEventListener('click', () => handleBadgeClick(filterBadge));
