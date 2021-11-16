@@ -49,12 +49,8 @@ function search() {
             jobItem.languages.concat(jobItem.tools).includes(selectedFilterItem)
         ));
     }
-    // 중복제거
-    filteredJobList = filteredJobList.filter(
-        (arr, index, callback) => index === callback.findIndex(t => t.id === arr.id)
-    );
-
-    renderJob(filteredJobList.length === 0 ? jobList : filteredJobList);
+    filteredJobList = new Set(filteredJobList);
+    renderJob(filteredJobList.length === 0 ? jobList : [...filteredJobList]);
 }
 
 export {
